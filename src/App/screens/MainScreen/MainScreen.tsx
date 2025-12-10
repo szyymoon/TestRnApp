@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
-import { CONATINER } from './styles';
+import { Button, Text, View } from 'react-native';
+import { TextInput } from 'react-native-paper';
+import { useDebounce } from '../../hooks/useDebounce';
 import {
   decrement,
   increment,
@@ -8,11 +9,10 @@ import {
   reset,
 } from '../../redux/counter/counterSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { TextInput } from 'react-native-paper';
-import { useDebounce } from '../../hooks/useDEbounce';
+import { CONATINER } from './styles';
 
 export const MainScreen = () => {
-  const [amountToIncrement, setAmountTRoIncrement] = useState<string>('');
+  const [amountToIncrement, setAmountTToIncrement] = useState<string>('');
   const count = useAppSelector(state => state.counter.counterValue);
   const dispatch = useAppDispatch();
 
@@ -27,11 +27,11 @@ export const MainScreen = () => {
   const resetValue = () => dispatch(reset());
 
   const debouncedIncrement = useDebounce((value: number) => {
-    dispatch(incrementByAmount(value))
-  }, 5000)
+    dispatch(incrementByAmount(value));
+  }, 2000);
 
   const callAmountIncrement = (valueFromInput: string) => {
-    setAmountTRoIncrement(valueFromInput);
+    setAmountTToIncrement(valueFromInput);
     debouncedIncrement(Number(valueFromInput));
   };
 
